@@ -1,3 +1,4 @@
+# Import Libraries
 import time
 import h5py
 import numpy as np
@@ -16,7 +17,7 @@ s3_resource = resource('s3')
 
 def load_data():
     # Load main dataset
-    dataset = h5py.File('/tmp/dataset.h5', 'r')
+    dataset = h5py.File('/tmp/datasets.h5', 'r')
 
     # Create numpy arrays from the various h5 datasets
     train_set_x_orig = np.array(dataset["train_set_x"][:]) # train set features
@@ -30,7 +31,6 @@ def load_data():
 
     return train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig
 
-
 def lambda_handler(event, context):
     # Retrieve datasets and setting from S3
     input_bucket = s3_resource.Bucket(str(event['Records'][0]['s3']['bucket']['name']))
@@ -41,8 +41,7 @@ def lambda_handler(event, context):
         input_bucket.download_file(settings_key, '/tmp/parameters.json')
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == '404':
-            sns_message = "Error downloading input data from S3, S3 object does not exist"
-            publish_sns(sns_message)
+            print("Error downloading input data from S3, S3 object does not exist")
         else:
             raise
     
@@ -67,11 +66,21 @@ def lambda_handler(event, context):
 
     from DeepNeuralNetwork import DeepNeuralNetwork
     layers_dims = (12288, 20, 7, 5, 1)
-    activations = ['relu', 'relu', 'relu','sigmoid']
-    num_iter = 10
+    activations = []
+    for k, v in parameters['activations'].items():
+        activations.append(v)
+    num_iter = parameters['epochs']
     learning_rate = 0.0075
 
-    clf = DeepNeuralNetwork(layers_dims, activations)\
+    clf, params = DeepNeuralNetwork(layers_dims, activations)\
                 .fit(train_x, train_y, num_iter, learning_rate, True, 100)
     #print('train accuracy: {:.2f}%'.format(clf.accuracy_score(train_x, train_y)*100))
-    print('test accuracy: {:.2f}%'.format(clf.accuracy_score(test_x, test_y)*100))
+    print('Model Accuracy: {:.2f}%'.format(clf.accuracy_score(test_x, test_y)*100))
+    
+    # Create params file
+    with h5py.File('/tmp/params.h5', 'w') as h5file:
+        for key in params:
+            h5file['/' + key] = params[key]
+    
+    # Upload model parameters file to S3
+    s3_resource.Object(input_bucket.name, 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
