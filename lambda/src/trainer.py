@@ -38,7 +38,7 @@ def lambda_handler(event, context):
     settings_key = dataset_key.split('/')[-2] + '/parameters.json'
     try:
         input_bucket.download_file(dataset_key, '/tmp/datasets.h5')
-        input_bucket.download_file('itsacat-local', 'parameters.json', '/tmp/parameters.json')
+#        input_bucket.download_file('itsacat-local', 'parameters.json', '/tmp/parameters.json')
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == '404':
             print("Error downloading input data from S3, S3 object does not exist")
@@ -46,8 +46,8 @@ def lambda_handler(event, context):
             raise
     
     # Extract the neural network parameters
-    with open('/tmp/parameters.json') as parameters_file:
-        parameters = json.load(parameters_file)
+ #   with open('/tmp/parameters.json') as parameters_file:
+ #       parameters = json.load(parameters_file)
         
     np.random.seed(1)
     train_x_orig, train_y, test_x_orig, test_y = load_data()
@@ -66,10 +66,8 @@ def lambda_handler(event, context):
 
     from DeepNeuralNetwork import DeepNeuralNetwork
     layers_dims = (12288, 20, 7, 5, 1)
-    activations = []
-    for k, v in parameters['activations'].items():
-        activations.append(v)
-    num_iter = parameters['epochs']
+    activations = ['relu', 'relu', 'relu', 'sigmoid']
+    num_iter = 10
     learning_rate = 0.0075
 
     clf, params = DeepNeuralNetwork(layers_dims, activations)\

@@ -8,7 +8,7 @@ Resources:
   Trainer:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: trainer.lambda_handler
+      Handler: src.trainer.lambda_handler
       Runtime: python3.6
       # Local Package for testing
       CodeUri: package.zip
