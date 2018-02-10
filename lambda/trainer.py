@@ -38,7 +38,7 @@ def lambda_handler(event, context):
     settings_key = dataset_key.split('/')[-2] + '/parameters.json'
     try:
         input_bucket.download_file(dataset_key, '/tmp/datasets.h5')
-        input_bucket.download_file(settings_key, '/tmp/parameters.json')
+        input_bucket.download_file('itsacat-local', 'parameters.json', '/tmp/parameters.json')
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == '404':
             print("Error downloading input data from S3, S3 object does not exist")
@@ -84,3 +84,4 @@ def lambda_handler(event, context):
     
     # Upload model parameters file to S3
     s3_resource.Object(input_bucket.name, 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
+    s3_resource.Object('itsacat-local', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
