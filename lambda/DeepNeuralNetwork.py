@@ -152,7 +152,7 @@ class DeepNeuralNetwork():
             final_parameters = self.__update_parameters(grads, learning_rate)
             # print cost
             if i % print_num == 0 and print_cost:
-                    print ("Cost after iteration %i: %f" %(i, cost))
+                    print ("Model Error after Epoch %i: %f" %(i, cost))
         return self, final_parameters
 
     def predict_prob(self, X):
