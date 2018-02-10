@@ -85,33 +85,6 @@ Resources:
         VpcCIDR: 10.215.0.0/16
         PublicSubnet1CIDR: 10.215.10.0/24
         PublicSubnet2CIDR: 10.215.11.0/24
-        PrivateSubnet1CIDR: 10.215.20.0/24
-        PrivateSubnet2CIDR: 10.215.21.0/24
-
-  SNN:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${TemplateBucket}/templates/SNN.yaml
-      Parameters:
-        VPC: !GetAtt VPC.Outputs.VPC
-        EnvironmentName: !Ref AWS::StackName
-        TopicEmail: !Ref EmailAddress
-        S3Bucket: !Ref TemplateBucket
-        PrivateSubnet1: !GetAtt VPC.Outputs.PrivateSubnet1
-        PrivateSubnet2: !GetAtt VPC.Outputs.PrivateSubnet2
-        VpcCIDR: 10.215.0.0/16
-  
-  ElastiCache:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${TemplateBucket}/templates/elasticache.yaml
-      Parameters:
-        EnvironmentName: !Ref AWS::StackName
-        PrivateSubnet1: !GetAtt VPC.Outputs.PrivateSubnet1
-        PrivateSubnet2: !GetAtt VPC.Outputs.PrivateSubnet2
-        ClusterNodeType: !Ref ClusterNodeType
-        VPC: !GetAtt VPC.Outputs.VPC
-        VpcCIDR: 10.215.0.0/16
 
   DeploymentPipeline:
     Type: AWS::CloudFormation::Stack
@@ -127,7 +100,7 @@ Resources:
         Subnet2: !GetAtt VPC.Outputs.PublicSubnet2
         VpcId: !GetAtt VPC.Outputs.VPC
         VpcCIDR: 10.215.0.0/16
-        SNSTopic: !GetAtt SNN.Outputs.SNSTopicArn
+        EmailAddress: !Ref EmailAddress
 
 Outputs:
   PipelineUrl:

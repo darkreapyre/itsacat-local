@@ -29,10 +29,17 @@ Parameters:
   VpcCIDR:
     Type: String
 
-  SNSTopic:
+  EmailAddress:
     Type: String 
 
 Resources:
+  SNSTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      Subscription:
+        - Endpoint: !Ref EmailAddress
+          Protocol: email
+
   FlipLambda:
     Type: AWS::Lambda::Function
     Properties:
