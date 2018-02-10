@@ -8,12 +8,9 @@ Resources:
   Trainer:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src.trainer.lambda_handler
+      Handler: trainer.lambda_handler
       Runtime: python3.6
-      # Local Package for testing
       CodeUri: package.zip
-      # S3 Bucket for production
-#      CodeUri: s3://itsacat-local/package.zip
       MemorySize: 3008
       Timeout: 300
       Events:
@@ -21,12 +18,14 @@ Resources:
           Type: S3
           Properties:
             Bucket: !Ref TrainingInputBucket
-            Events: s3:ObjectCreated:Put
+            Events: s3:ObjectCreated:*
             Filter:
               S3Key:
                 Rules:
                   - Name: suffix
                     Value: 'h5'
+            Policies:
+              - AmazonS3FullAccess
 
   TrainingInputBucket:
     Type: AWS::S3::Bucket

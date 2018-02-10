@@ -35,7 +35,7 @@ def lambda_handler(event, context):
     # Retrieve datasets and setting from S3
     input_bucket = s3_resource.Bucket(str(event['Records'][0]['s3']['bucket']['name']))
     dataset_key = str(event['Records'][0]['s3']['object']['key'])
-    settings_key = dataset_key.split('/')[-2] + '/parameters.json'
+#    settings_key = dataset_key.split('/')[-2] + '/parameters.json'
     try:
         input_bucket.download_file(dataset_key, '/tmp/datasets.h5')
 #        input_bucket.download_file('itsacat-local', 'parameters.json', '/tmp/parameters.json')
@@ -67,7 +67,7 @@ def lambda_handler(event, context):
     from DeepNeuralNetwork import DeepNeuralNetwork
     layers_dims = (12288, 20, 7, 5, 1)
     activations = ['relu', 'relu', 'relu', 'sigmoid']
-    num_iter = 10
+    num_iter = 3000
     learning_rate = 0.0075
 
     clf, params = DeepNeuralNetwork(layers_dims, activations)\

@@ -19,7 +19,10 @@ echo "venv new size $(du -sh $VIRTUAL_ENV | cut -f1)"
 pushd $VIRTUAL_ENV/lib/python3.6/site-packages/
 zip -r -9 /var/task/package.zip *
 popd
+echo "venv original size $(du -sh $VIRTUAL_ENV | cut -f1)"
 deactivate
 
-cd /var/task/
-zip -r9 package.zip src/*.py
+cd /var/task/src
+zip -r9 ../package.zip *.py
+#cd ..
+#rm -rf venv
