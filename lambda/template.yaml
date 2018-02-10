@@ -24,8 +24,8 @@ Resources:
                 Rules:
                   - Name: suffix
                     Value: 'h5'
-            Policies:
-              - AmazonS3FullAccess
+      Policies:
+        - AmazonS3FullAccess
 
   TrainingInputBucket:
     Type: AWS::S3::Bucket

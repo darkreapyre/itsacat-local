@@ -8,3 +8,5 @@ event.yaml
 
 /var
 /venv
+
+/serverless

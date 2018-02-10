@@ -35,19 +35,13 @@ def lambda_handler(event, context):
     # Retrieve datasets and setting from S3
     input_bucket = s3_resource.Bucket(str(event['Records'][0]['s3']['bucket']['name']))
     dataset_key = str(event['Records'][0]['s3']['object']['key'])
-#    settings_key = dataset_key.split('/')[-2] + '/parameters.json'
     try:
         input_bucket.download_file(dataset_key, '/tmp/datasets.h5')
-#        input_bucket.download_file('itsacat-local', 'parameters.json', '/tmp/parameters.json')
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == '404':
             print("Error downloading input data from S3, S3 object does not exist")
         else:
             raise
-    
-    # Extract the neural network parameters
- #   with open('/tmp/parameters.json') as parameters_file:
- #       parameters = json.load(parameters_file)
         
     np.random.seed(1)
     train_x_orig, train_y, test_x_orig, test_y = load_data()
@@ -81,5 +75,5 @@ def lambda_handler(event, context):
             h5file['/' + key] = params[key]
     
     # Upload model parameters file to S3
-    s3_resource.Object(input_bucket.name, 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
+#    s3_resource.Object(input_bucket.name, 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
     s3_resource.Object('itsacat-local', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
