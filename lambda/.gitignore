@@ -1,3 +1,10 @@
+.DS_Store
 event.yaml
-*.zip
-!.gitignore
+*.py[co]
+*.egg-info
+
+/package.zip
+/packaged.yml
+
+/var
+/venv
