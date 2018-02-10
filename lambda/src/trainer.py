@@ -61,7 +61,7 @@ def lambda_handler(event, context):
     from DeepNeuralNetwork import DeepNeuralNetwork
     layers_dims = (12288, 20, 7, 5, 1)
     activations = ['relu', 'relu', 'relu', 'sigmoid']
-    num_iter = 3000
+    num_iter = 30
     learning_rate = 0.0075
 
     clf, params = DeepNeuralNetwork(layers_dims, activations)\
@@ -75,5 +75,4 @@ def lambda_handler(event, context):
             h5file['/' + key] = params[key]
     
     # Upload model parameters file to S3
-#    s3_resource.Object(input_bucket.name, 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
     s3_resource.Object('itsacat-local', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))

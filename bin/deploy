@@ -12,12 +12,6 @@ read GitHubToken
 echo -n "Enter the e-mail address for Pipeline Approval > "
 read email
 
-cp lambda/deps.zip deploy/package.zip
-cp lambda/src/*.py deploy/
-cd deploy
-zip -r package.zip *.py
-cd .. 
-
 zip deploy/templates.zip main.yaml templates/*
 cd scripts && zip scripts.zip * && cd ..
 mv scripts/scripts.zip deploy/scripts.zip
@@ -30,5 +24,6 @@ aws s3 cp main.yaml "s3://${bucket}" --acl public-read
 aws s3 cp --recursive templates/ "s3://${bucket}/templates" --acl public-read
 aws s3 cp --recursive scripts/ "s3://${bucket}/scripts" --acl public-read
 aws s3 cp parameters.json "s3://${bucket}/training_input/" --acl public-read
+aws s3 cp assets/datasets/datasets.h5 "s3://${bucket}/training_input/" --acl public-read
 aws s3api put-bucket-versioning --bucket "${bucket}" --versioning-configuration Status=Enabled
 aws cloudformation deploy --stack-name $stackname --template-file main.yaml --capabilities CAPABILITY_NAMED_IAM --parameter-overrides TemplateBucket=$bucket GitHubToken=$GitHubToken EmailAddress=$email GitHubUser=$GitHubUser --region us-east-1

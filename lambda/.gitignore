@@ -1,10 +1,10 @@
 .DS_Store
-event.yaml
+event.json
 *.py[co]
 *.egg-info
 
-/package.zip
-/packaged.yaml
+package.zip
+packaged.yaml
 
 /var
 /venv
