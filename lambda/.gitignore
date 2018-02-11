@@ -5,6 +5,7 @@ event.json
 
 package.zip
 packaged.yaml
+packaged.yml
 
 /var
 /venv
