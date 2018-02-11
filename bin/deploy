@@ -22,7 +22,7 @@ aws s3 cp deploy/scripts.zip "s3://${bucket}" --acl public-read
 aws s3 cp main.yaml "s3://${bucket}" --acl public-read
 aws s3 cp --recursive templates/ "s3://${bucket}/templates" --acl public-read
 aws s3 cp --recursive scripts/ "s3://${bucket}/scripts" --acl public-read
-aws s3 cp assets/datasets/parameters.json "s3://${bucklet}/training_input/" --acl public-read
+aws s3 cp assets/datasets/parameters.json "s3://${bucket}/training_input/" --acl public-read
 aws s3 cp assets/datasets/datasets.h5 "s3://${bucket}/training_input/" --acl public-read
 aws s3api put-bucket-versioning --bucket "${bucket}" --versioning-configuration Status=Enabled
 aws cloudformation deploy --stack-name $stackname --template-file main.yaml --capabilities CAPABILITY_NAMED_IAM --parameter-overrides TemplateBucket=$bucket GitHubToken=$GitHubToken EmailAddress=$email GitHubUser=$GitHubUser --region us-east-1
