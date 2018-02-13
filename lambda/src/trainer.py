@@ -75,4 +75,4 @@ def lambda_handler(event, context):
             h5file['/' + key] = params[key]
     
     # Upload model parameters file to S3
-    #s3_resource.Object('itsacat-local', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
+    s3_resource.Object('itsacat-local', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
