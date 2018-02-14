@@ -34,14 +34,16 @@ $ bin/deploy
     - Switch from "Blue" to "Green" in `src/templates/results.html`.
     - Commit changes to GitHub.
     - Reject any requests for pipeline approval.
-    - Delete the Python runtime Docker container and image.
 4. Cleanup environment before the demo.
+    - Delete the Python runtime Docker container and image.
     - Delete `event.json`.
     - Delete `venv` virtual environment.
     - Delete `package.zip`.
     - Comment out the last line of `trainer.py` **BUT** do not push the changes to GitHub.
+    - Clear out all CloudWatch Event logs.
 5. Prepare to run the demo.
     - Open the "Blue" prediction API in a Web Browser.
+    - Open a browser tab of the GitHub Repository.
     - Open a browser tab of appropriate cat imaages from Google images.
     - Open a browser tab to the AWS CloudFormation Console.
 
