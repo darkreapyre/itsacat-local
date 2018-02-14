@@ -35,17 +35,35 @@ $ bin/deploy
     - Commit changes to GitHub.
     - Reject any requests for pipeline approval.
     - Delete the Python runtime Docker container and image.
+4. Cleanup environment before the demo.
+    - Delete `event.json`.
+    - Delete `venv` virtual environment.
+    - Delete `package.zip`.
+    - Comment out the last line of `trainer.py` **BUT** do not push the changes to GitHub.
+5. Prepare to run the demo.
+    - Open the "Blue" prediction API in a Web Browser.
+    - Open a browser tab of appropriate cat imaages from Google images.
+    - Open a browser tab to the AWS CloudFormation Console.
 
 ## Execute the demo.
-
->**Note:** Don't forget to uncomment `trainer.py` (as well as rebuilding the deployment package) before uploading the Lambda package to AWS for "production" testing.
-
 1. Update `num_interations` to `3000` and comment out last line, then save.
 2. Update deployment package.
+```terminal
+    $ docker run -v $PWD:/var/task -it lambci/lambda:build-python3.6 /bin/bash -c './create_package.sh'
+```
 3. Generate the `events.json`.
+```terminal
+    $ sam local generate-event s3 --bucket itsacat-local --key training_input/datasets.h5 > event.json
+```
 4. `invoke` the function locally.
+```terminal
+    $ sam local invoke "Trainer" -e event.json
+```
 5. Uncomment last line of `trainer.py`.
 6. Update deployment package.
+```terminal
+    $ docker run -v $PWD:/var/task -it lambci/lambda:build-python3.6 /bin/bash -c './create_package.sh'
+```
 7. Package the function for the cloud.
 ```terminal
     $ sam package --template-file template.yaml --s3-bucket itsacat-local --output-template-file packaged.yaml
@@ -54,4 +72,4 @@ $ bin/deploy
 ```terminal
     $ sam deploy --template-file packaged.yaml --stack-name demo-lambda --capabilities CAPABILITY_IAM
 ```
-9. Trigger event and monitor.
+9. Trigger event by uploading `datasets.h5` to the created S3 Bucket and monitor.
