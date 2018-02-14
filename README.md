@@ -15,7 +15,7 @@ $ git clone https://github.com/darkreapyre/itsacat-local.git
 ```terminal
 $ bin/deploy
 ```
->**Note:** The deployment should fail getting the parameters.
+>**Note:** The deployment should fail getting the parameters source.
 3. Generate "bad" parameters.
     - Run *Trainer* using SAM Local.
     ```terminal
@@ -40,7 +40,7 @@ $ bin/deploy
 
 >**Note:** Don't forget to uncomment `trainer.py` (as well as rebuilding the deployment package) before uploading the Lambda package to AWS for "production" testing.
 
-1. Update `num_interations` to `3000` and comment oput last line, then save.
+1. Update `num_interations` to `3000` and comment out last line, then save.
 2. Update deployment package.
 3. Generate the `events.json`.
 4. `invoke` the function locally.
