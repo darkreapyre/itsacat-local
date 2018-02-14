@@ -47,7 +47,7 @@ $ bin/deploy
     - Open a browser tab of appropriate cat imaages from Google images.
     - Open a browser tab to the AWS CloudFormation Console.
 
-## Execute the demo.
+## Run the demo.
 1. Update `num_interations` to `3000` and comment out last line, then save.
 2. Update deployment package.
 ```terminal
@@ -57,11 +57,11 @@ $ bin/deploy
 ```terminal
     $ sam local generate-event s3 --bucket itsacat-local --key training_input/datasets.h5 > event.json
 ```
-4. `invoke` the function locally.
+4. Invoke the function locally.
 ```terminal
     $ sam local invoke "Trainer" -e event.json
 ```
-5. Uncomment last line of `trainer.py`.
+5. **Uncomment last line of `trainer.py`.**
 6. Update deployment package.
 ```terminal
     $ docker run -v $PWD:/var/task -it lambci/lambda:build-python3.6 /bin/bash -c './create_package.sh'
