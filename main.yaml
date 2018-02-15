@@ -31,15 +31,6 @@ Parameters:
     Description: Email Address for Approval.
     Type: String
 
-  ClusterNodeType:
-    Description: ElastiCache node type.
-    Type: String
-    Default: cache.t2.small
-    AllowedValues:
-      - cache.t2.small
-      - cache.t2.medium
-      - cache.m4.large
-
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterLabels:
@@ -53,8 +44,6 @@ Metadata:
         default: "Personal Access Token"
       TemplateBucket:
         default: "Template Bucket"
-      ClusterNodeType:
-        default: "Cluster Node Type"
       EmailAddress:
         default: "Email Address"
     ParameterGroups:
@@ -66,11 +55,7 @@ Metadata:
           - GitHubUser
           - GitHubToken
       - Label:
-          default: ElastiCache Configuration
-        Parameters:
-          - ClusterNodeType
-      - Label:
-          default: Machine Lernning Pipline Configuration
+          default: Machine Learning Pipline Configuration
         Parameters:
           - TemplateBucket
           - EmailAddress

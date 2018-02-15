@@ -101,7 +101,7 @@ Resources:
 
   CloudFormationExecutionRole:
     Type: AWS::IAM::Role
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     Properties:
       #RoleName: !Sub cfn-${AWS::StackName}
       Path: /
