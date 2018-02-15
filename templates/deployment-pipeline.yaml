@@ -274,6 +274,9 @@ Resources:
         BuildSpec: |
           version: 0.1
           phases:
+            install:
+              commands:
+                - pip install --upgrade boto3
             pre_build:
               commands:
                 - printenv
