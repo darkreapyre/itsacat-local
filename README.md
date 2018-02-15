@@ -1,6 +1,6 @@
-# Image Prediction API Pipeline Demo using SAM Local
+# Image Prediction API, DevOps Pipeline Demo using SAM Local
 
-![alt text](https://github.com/darkreapyre/itsacat-local/blob/master/assets/images/Prediction_Architecture.png "Architecture")
+![alt text](https://github.com/darkreapyre/itsacat-local/blob/master/assets/images/SAM_Local_Architecture.png "Architecture")
 
 ## Pre-requisites
 1. Install AWS CLI.
