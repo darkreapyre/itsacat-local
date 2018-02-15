@@ -31,7 +31,7 @@ $ bin/deploy
         $ rm package.zip
     ```
     - Comment the last line of `trainer.py`.
-    - Switch from "Blue" to "Green" in `src/templates/results.html`.
+    - Switch from "Blue" to "Green" in `src/templates/results.html` and save.
     - Commit changes to GitHub.
     - Reject any requests for pipeline approval.
     - Comment out the last line of `trainer.py` **BUT** do not push the changes to GitHub.
