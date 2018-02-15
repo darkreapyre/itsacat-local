@@ -235,10 +235,6 @@ Resources:
           version: 0.2
           phases:
             install:
-              commands:
-                - apt-get update && apt-get -y install python-pip
-                - pip install --upgrade python
-                - pip install --upgrade awscli
             pre_build:
               commands: 
                 - printenv
@@ -279,12 +275,6 @@ Resources:
         BuildSpec: |
           version: 0.1
           phases:
-            install:
-              commands:
-                - pip install --upgrade pip
-                - pip install --upgrade python
-                - pip install --upgrade awscli
-                - pip install --upgrade boto3
             pre_build:
               commands:
                 - printenv
