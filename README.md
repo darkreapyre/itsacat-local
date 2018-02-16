@@ -55,7 +55,7 @@ $ bin/deploy
 ```
 4. Invoke the function locally.
 ```terminal
-    $ sam local invoke "Trainer" -e event.json
+    $ sam local invoke "Demo" -e event.json
 ```
 5. **Uncomment last line of `trainer.py`.**
 6. Update deployment package.
