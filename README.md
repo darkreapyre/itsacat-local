@@ -46,6 +46,7 @@ $ bin/deploy
 1. Update `num_interations` to `3000` and comment out last line, then save.
 2. Update deployment package.
 ```terminal
+    $ cd lambda
     $ docker run -v $PWD:/var/task -it lambci/lambda:build-python3.6 /bin/bash -c './create_package.sh'
 ```
 3. Generate the `events.json`.

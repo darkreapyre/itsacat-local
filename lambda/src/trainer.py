@@ -76,6 +76,5 @@ def lambda_handler(event, context):
     
     # Upload model parameters file to S3
     #s3_resource.Object('itsacat-local', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
-    s3_resource.Object('trimble-demo', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
-    #s3_resource.Object('sam-local-demo', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
+    s3_resource.Object('trimble-sam-local', 'predict_input/params.h5').put(Body=open('/tmp/params.h5', 'rb'))
     
