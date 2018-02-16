@@ -441,7 +441,7 @@ Resources:
                 FunctionName: !Ref FlipLambda
                 UserParameters: !Sub |
                   {
-                    "ElbName": "${GitHubRepo}"
+                    "ElbName": "alb"
                   }
               RunOrder: 1
 
